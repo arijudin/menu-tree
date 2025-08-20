@@ -120,42 +120,43 @@ export default function MenuForm({ menu, state, onSuccess, onCancel }: MenuFormP
 
   React.useEffect(() => {
     setIsInitializing(true)
-    if (!menu) {
-      handleResetForm()
-      return
-    }
+    try {
+      if (!menu) {
+        handleResetForm()
+        return
+      }
 
-    const parentId =
-      (menu as MenuItem).parentId ?? (menu as MenuItem).parentId ?? null
+      const parentId =
+        (menu as MenuItem).parentId ?? (menu as MenuItem).parentId ?? null
 
-    if (!parentId) {
+      if (!parentId) {
+        setFormData(prev => ({
+          ...prev,
+          uid: menu.uid ?? prev.uid,
+          depth: menu.depth,
+          parentId: null,
+          parentName: state === "update" ? "" : menu.name,
+          name: state === "update" ? menu.name ?? prev.name : "",
+          isActive: menu.isActive ?? prev.isActive,
+        }))
+        return
+      }
+
+      const parent = Array.isArray(menus) ? findMenuById(menus, Number(parentId)) : null
+
       setFormData(prev => ({
         ...prev,
         uid: menu.uid ?? prev.uid,
         depth: menu.depth,
-        parentId: null,
-        parentName: state === "update" ? "" : menu.name,
+        parentId: state === "update" ? menu.parentId : menu.id,
+        parentName: state === "update" ? parent?.name ?? "" : menu.name,
         name: state === "update" ? menu.name ?? prev.name : "",
         isActive: menu.isActive ?? prev.isActive,
       }))
-      return
+    } finally {
+      setIsInitializing(false)
     }
 
-    const parent = Array.isArray(menus) ? findMenuById(menus, Number(parentId)) : null
-
-    setFormData(prev => ({
-      ...prev,
-      uid: menu.uid ?? prev.uid,
-      depth: menu.depth,
-      parentId: state === "update" ? menu.parentId : menu.id,
-      parentName: state === "update" ? parent?.name ?? "" : menu.name,
-      name: state === "update" ? menu.name ?? prev.name : "",
-      isActive: menu.isActive ?? prev.isActive,
-    }))
-
-    setTimeout(() => {
-      setIsInitializing(false)
-    }, 100)
   }, [menu, state, menus])
 
   return (
