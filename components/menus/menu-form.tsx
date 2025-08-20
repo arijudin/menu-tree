@@ -134,7 +134,7 @@ export default function MenuForm({ menu, state, onSuccess, onCancel }: MenuFormP
           ...prev,
           uid: menu.uid ?? prev.uid,
           depth: menu.depth,
-          parentId: null,
+          parentId: state === "add" ? menu.id : null,
           parentName: state === "update" ? "" : menu.name,
           name: state === "update" ? menu.name ?? prev.name : "",
           isActive: menu.isActive ?? prev.isActive,
