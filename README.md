@@ -235,3 +235,5 @@ const data = await dispatch(fetchMenuById({ id, params:{ tree: "true" } })).unwr
 - Handle CORS on BE.
 - Keep environment-specific flags out of the repo.
 - Use CI to run `lint`, `typecheck`, and build before deploy.
+
+![Demo Menu Tree](./public/demo.gif)
