@@ -6,6 +6,9 @@ A small but robust admin UI to manage a hierarchical **Menu Tree**. It uses:
 - **Redux Toolkit** for data & UI state (selected root, pagination, etc.)
 - **shadcn/ui** (Radix) for UI primitives (Select, Collapsible, etc.)
 
+## Demo
+![Demo Menu Tree](./public/demo.gif)
+
 ---
 
 ## Features
@@ -235,5 +238,3 @@ const data = await dispatch(fetchMenuById({ id, params:{ tree: "true" } })).unwr
 - Handle CORS on BE.
 - Keep environment-specific flags out of the repo.
 - Use CI to run `lint`, `typecheck`, and build before deploy.
-
-![Demo Menu Tree](./public/demo.gif)
